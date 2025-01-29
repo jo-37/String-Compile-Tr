@@ -1,0 +1,7 @@
+^\.gitignore
+^xt/
+^MANIFEST\.
+^test\.pl$
+^Makefile\.old$
+^_config\.yml$
+^README\.md$

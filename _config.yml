@@ -1,0 +1,3 @@
+theme: jekyll-theme-slate
+title: Syntax::Feature::TrVars
+description: Use variables as tr/// operands
