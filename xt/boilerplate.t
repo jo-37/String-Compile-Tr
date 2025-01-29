@@ -38,16 +38,9 @@ sub module_boilerplate_ok {
     );
 }
 
-TODO: {
-  local $TODO = "Need to replace the boilerplate text";
-
-  not_in_file_ok(Changes =>
-    "placeholder date/time"       => qr(Date/time)
-  );
-
-
-
-}
+not_in_file_ok(Changes =>
+  "placeholder date/time"       => qr(Date/time)
+);
 
 module_boilerplate_ok('lib/Syntax/Feature/TrVars.pm');
 
