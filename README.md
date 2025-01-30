@@ -132,5 +132,6 @@ the same terms as the Perl 5 programming language system itself.
 # SEE ALSO
 
 ["tr/\*SEARCHLIST\*/\*REPLACEMENTLIST\*/cdsr" in perlop](https://metacpan.org/pod/perlop#tr-SEARCHLIST-REPLACEMENTLIST-cdsr),
+["eval EXPR" in perlfunc](https://metacpan.org/pod/perlfunc#eval-EXPR),
 ["Overloading Constants" in overload](https://metacpan.org/pod/overload#Overloading-Constants),
 [PadWalker](https://metacpan.org/pod/PadWalker)
