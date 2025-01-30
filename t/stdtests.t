@@ -52,6 +52,20 @@ use Syntax::Feature::TrVars;
     is $s, 'e654a', 'compile time usage';
 }
 
+### ToDo
+{
+    my $todo = todo 'probably a bug in PadWalker';
+    my $b52 = 'a';
+    my $s = 'ab';
+    ok lives {eval '$s =~ tr/$b52/X/; 1' or die $@},
+        'run b52', $@;
+}
+{
+    # This makes the previous test fail:
+    my $b52 = 'b';
+}
+###
+
 {
     no Syntax::Feature::TrVars;
 
