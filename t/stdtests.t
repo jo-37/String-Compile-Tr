@@ -61,7 +61,9 @@ use Syntax::Feature::TrVars;
         'run b52', $@;
 }
 {
-    # This makes the previous test fail:
+    # The declaration of $b52 in a different scope causes the previous
+    # test to fail.
+    # B52's are long-range, but F16 would fail here, too.
     my $b52 = 'b';
 }
 ###
