@@ -32,6 +32,17 @@ use Syntax::Feature::TrVars;
 }
 
 {
+    our $glob = 'a';
+    {
+        local $glob = 'b';
+        my $s = 'ab';
+        ok lives {eval '$s =~ tr/$glob/X/; 1' or die $@},
+            'run local', $@;
+        is $s, 'aX', 'use local';
+    }
+}
+
+{
     our $pre;
     BEGIN {
         $pre = 'bcd';

@@ -1,4 +1,4 @@
-^\.gitignore
+^\.git
 ^xt/
 ^MANIFEST\.
 ^test\.pl$

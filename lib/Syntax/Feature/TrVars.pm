@@ -30,7 +30,7 @@ $VERSION = '0.01';
     my $search = '/+=';
     my $replace = '-_';
     my $s = 'De/0xv5y3w8BpLF8ubOo+w==';
-    eval '$s =~ tr/$search/$replace/d; 1' or warn $@;
+    eval '$s =~ tr/$search/$replace/d';
     # $s = 'De-0xv5y3w8BpLF8ubOo_w'
 
     no Syntax::Feature::TrVars;
@@ -46,7 +46,7 @@ variables is to C<eval> a string with interpolated operands.
 The drawback of this approach are possible unwanted side effects induced
 by the variables' content, e.g.
 
-    $search = '//;warn -gotcha;tr/';
+    $search = '//;warn-trapped;$@=~tr/';
     eval "tr/$search//d";
 
 C<Syntax::Feature::TrVars> offers an alternative where the content of a
@@ -58,8 +58,8 @@ When any of C<*SEARCH*> or C<*REPLACE*> has the form "C<$name>",
 then C<$name> is taken as the name of a lexically scoped, simple,
 scalar variable, whose content is used as the actual operand.
 
-C<$name> must be declared as C<my $name> or C<our $name> - 
-anything else will fail.
+C<$name> must be declared as C<my $name>, C<state $name> or C<our $name>
+(possibly C<local>'ized) - anything else will fail.
 
 As the operands of the C<tr///> operator are processed at compile time,
 this feature should be used within a singly quoted string C<eval>.
@@ -69,6 +69,61 @@ The usage outside of an C<eval> is possible but of low value.
 
 By specifying C<no Syntax::Feature::TrVars>, this feature can be
 disabled.
+
+=head1 ERRORS
+
+When a referenced variable is not defined in the lexical scope of the
+C<tr///> execution, an exception C<"$name" not defined> is thrown.
+
+=head1 EXAMPLES
+
+A proposed usage of this module is:
+
+    use Syntax::Feature::TrVars;
+
+    my $search = 'abc';
+    my $replace = '123';
+    my $s = 'fedcab';
+    eval '$s =~ tr/$search/$replace/; 1' or warn $@;
+    # $s is 'fed321' now
+
+Note that result of C<tr> in scalar context is the number of characters
+replaced or the result of the transliteration under the C</r> option,
+both of which may legitimately evaluate to C<false>.
+Ending the C<eval>'ed string with C<; 1> makes sure C<eval> returns
+C<true> if there is no error.
+
+The example mentioned in L</DESCRIPTION> does no harm:
+
+    use Syntax::Feature::TrVars;
+
+    my $search = '//;warn-trapped;$@=~tr/';
+    my $s = 'abcdefghijklmnopqrstuvwxyz/;-$=~';
+    eval '$s =~ tr/$search//d; 1' or warn $@;
+    # $s is 'bcfghijklmoqsuvxyz'
+
+It is roughly equivalent to:
+
+   $s =~ tr{-adenprtw/;$=~}{}d;
+
+=head1 CAVEATS
+
+An exception thrown by C<Syntax::Feature::TrVals> within an C<eval> will
+be trapped.
+Make sure to capture such exceptions lest they get ignored.
+See L</EXAMPLES>.
+
+=head1 BUGS
+
+There are some rare cases where L<PadWalker> returns C<undef> when
+it should not.
+Avoid equally named lexical variables at the same stack level as
+operands.
+
+=head1 RESTRICTIONS
+
+Character ranges are not supported in the content of a referenced variable.
+A hyphen will always be interpreted literally.
 
 =head1 AUTHOR
 
@@ -80,6 +135,12 @@ This software is copyright (c) 2025 by Jörg Sommrey.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
+
+=head1 SEE ALSO
+
+L<perlop/"tr/*SEARCHLIST*/*REPLACEMENTLIST*/cdsr">,
+L<overload/Overloading Constants>,
+L<PadWalker>
 
 =cut
 
