@@ -15,12 +15,12 @@ Syntax::Feature::TrVars - process variables in tr/// operands
 
 =head1 VERSION
 
-Version 0.01
+Version 0.00_01
 
 =cut
 
 our
-$VERSION = '0.01';
+$VERSION = '0.00_01';
 
 
 =head1 SYNOPSIS
