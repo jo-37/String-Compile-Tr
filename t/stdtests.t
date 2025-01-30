@@ -54,7 +54,7 @@ use Syntax::Feature::TrVars;
 
 ### ToDo
 {
-    my $todo = todo 'A bug in PadWalker?';
+    my $todo = todo 'bug in PadWalker?';
     my $b52 = 'a';
     my $s = 'ab';
     ok lives {eval '$s =~ tr/$b52/X/; 1' or die $@},
