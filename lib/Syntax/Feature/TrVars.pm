@@ -115,10 +115,26 @@ See L</EXAMPLES>.
 
 =head1 BUGS
 
-There are some rare cases where L<PadWalker> returns C<undef> when
-it should not.
-Avoid equally named lexical variables at the same stack level as
-operands.
+There seems to be an issue with L<PadWalker>.
+
+In combination with C<Syntax::Feature::TrVars>, L<PadWalker> does not
+provide the content of a lexical variable if it is re-declared
+afterwards, even in a different context.
+
+This does not work:
+
+    my $s = 'ab';
+    {
+        my $x = 'a';
+        eval 'tr /$x/X/; 1' or warn $@;
+    }
+    {
+        my $x = 'b';
+    }
+
+It will print C<"$x" not defined>.
+
+Use C<local our $x> to circumvent this problem.
 
 =head1 RESTRICTIONS
 

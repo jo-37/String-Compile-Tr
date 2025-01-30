@@ -54,16 +54,15 @@ use Syntax::Feature::TrVars;
 
 ### ToDo
 {
-    my $todo = todo 'probably a bug in PadWalker';
+    my $todo = todo 'A bug in PadWalker?';
     my $b52 = 'a';
     my $s = 'ab';
     ok lives {eval '$s =~ tr/$b52/X/; 1' or die $@},
         'run b52', $@;
 }
 {
-    # The declaration of $b52 in a different scope causes the previous
-    # test to fail.
-    # B52's are long-range, but F16 would fail here, too.
+    # The declaration of $b52 in any (?) scope after the previous block
+    # causes the test therein to fail.
     my $b52 = 'b';
 }
 ###
