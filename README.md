@@ -4,7 +4,7 @@ Syntax::Feature::TrVars - process variables in tr/// operands
 
 # VERSION
 
-Version 0.01
+Version 0.00\_01
 
 # SYNOPSIS
 
@@ -110,7 +110,8 @@ See ["EXAMPLES"](#examples).
 
 There are some rare cases where [PadWalker](https://metacpan.org/pod/PadWalker) returns `undef` when
 it should not.
-Try to avoid equally named lexical variables at the same stack level.
+Avoid equally named lexical variables at the same stack level as
+operands.
 
 # RESTRICTIONS
 
