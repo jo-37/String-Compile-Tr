@@ -109,10 +109,12 @@ the same terms as the Perl 5 programming language system itself.
 
 =head1 SEE ALSO
 
-L<perlop/"tr/*SEARCHLIST*/*REPLACEMENTLIST*/cdsr">,
-L<perlfunc/eval EXPR>,
-L<overload/Overloading Constants>,
-L<PadWalker>
+L<perlop/"tr/*SEARCHLIST*/*REPLACEMENTLIST*/cdsr">
+
+L<Exporter::Tiny::Manual::Importing>
+
+L<Regexp::Tr> provides a similar functionality, though this C<eval>'s
+its oprands.
 
 =cut
 
