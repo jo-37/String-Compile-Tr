@@ -4,10 +4,10 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 my %WriteMakefileArgs = (
-    NAME             => 'Syntax::Feature::TrVars',
+    NAME             => 'String::Compile::Tr',
     AUTHOR           => q{Jörg Sommrey <git@sommrey.de>},
-    VERSION_FROM     => 'lib/Syntax/Feature/TrVars.pm',
-    ABSTRACT_FROM    => 'lib/Syntax/Feature/TrVars.pm',
+    VERSION_FROM     => 'lib/String/Compile/Tr.pm',
+    ABSTRACT_FROM    => 'lib/String/Compile/Tr.pm',
     LICENSE          => 'perl_5',
     MIN_PERL_VERSION => '5.006',
     CONFIGURE_REQUIRES => {
@@ -22,14 +22,14 @@ my %WriteMakefileArgs = (
         Carp       => '0',
         PadWalker  => '0',
     },
-    clean => {FILES => "Syntax-Feature-TrVars-*"},
+    clean => {FILES => "String-Compile-Tr-*"},
     META_MERGE => {
         "meta-spec" => { version => 2 },
         resources => {
             repository => {
                 type => 'git',
-                url => 'git://github.com/jo-37/Syntax-Feature-TrVars.git',
-                web => 'https://github.com/jo-37/Syntax-Feature-TrVars.git',
+                url => 'git://github.com/jo-37/String-Compile-Tr.git',
+                web => 'https://github.com/jo-37/String-Compile-Tr.git',
             },
         },
     },

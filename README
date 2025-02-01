@@ -1,4 +1,4 @@
-Syntax-Feature-TrVars
+String-Compile-Tr
 
 INSTALLATION
 
@@ -14,18 +14,18 @@ SUPPORT AND DOCUMENTATION
 After installing, you can find documentation for this module with the
 perldoc command.
 
-    perldoc Syntax::Feature::TrVars
+    perldoc String::Compile::Tr
 
 You can also look for information at:
 
     RT, CPAN's request tracker (report bugs here)
-        https://rt.cpan.org/NoAuth/Bugs.html?Dist=Syntax-Feature-TrVars
+        https://rt.cpan.org/NoAuth/Bugs.html?Dist=String-Compile-Tr
 
     CPAN Ratings
-        https://cpanratings.perl.org/d/Syntax-Feature-TrVars
+        https://cpanratings.perl.org/d/String-Compile-Tr
 
     Search CPAN
-        https://metacpan.org/release/Syntax-Feature-TrVars
+        https://metacpan.org/release/String-Compile-Tr
 
 
 LICENSE AND COPYRIGHT

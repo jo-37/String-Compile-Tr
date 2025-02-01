@@ -42,7 +42,7 @@ not_in_file_ok(Changes =>
   "placeholder date/time"       => qr(Date/time)
 );
 
-module_boilerplate_ok('lib/Syntax/Feature/TrVars.pm');
+module_boilerplate_ok('lib/String/Compile/Tr.pm');
 
 not_in_file_ok(README =>
   "The README is used..."       => qr/The README is used/,

@@ -7,7 +7,7 @@ use Test::More;
 plan tests => 1;
 
 BEGIN {
-    use_ok( 'Syntax::Feature::TrVars' ) || print "Bail out!\n";
+    use_ok( 'String::Compile::Tr' ) || print "Bail out!\n";
 }
 
-diag( "Testing Syntax::Feature::TrVars $Syntax::Feature::TrVars::VERSION, Perl $], $^X" );
+diag( "Testing String::Compile::Tr $String::Compile::Tr::VERSION, Perl $], $^X" );
