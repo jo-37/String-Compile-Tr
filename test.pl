@@ -11,7 +11,7 @@ use Syntax::Feature::TrVars;
 my $search = '/+=';
 my $replace = '-_';
 my $s = 'De/0xv5y3w8BpLF8ubOo+w==';
-ok lives {eval '$s =~ tr/$search/$replace/d; 1' or die $@}, 'runs', $@;
+ok trvars {eval '$s =~ tr/$search/$replace/d; 1'}, 'runs', $@;
 is $s, 'De-0xv5y3w8BpLF8ubOo_w', 'modified', $@;
 
 done_testing;

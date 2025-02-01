@@ -1,7 +1,7 @@
 ^\.git
 ^xt/
 ^MANIFEST\.
-^test\.pl$
+^test.*\.pl$
 ^Makefile\.old$
 ^_config\.yml$
 ^README\.md$

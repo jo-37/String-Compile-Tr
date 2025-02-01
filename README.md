@@ -4,7 +4,7 @@ Syntax::Feature::TrVars - process variables in tr/// operands
 
 # VERSION
 
-Version 0.00\_01
+Version 0.01
 
 # SYNOPSIS
 
@@ -14,7 +14,7 @@ use Syntax::Feature::TrVars;
 my $search = '/+=';
 my $replace = '-_';
 my $s = 'De/0xv5y3w8BpLF8ubOo+w==';
-eval '$s =~ tr/$search/$replace/d';
+trvars {eval '$s =~ tr/$search/$replace/d'};
 # $s = 'De-0xv5y3w8BpLF8ubOo_w'
 
 no Syntax::Feature::TrVars;
@@ -41,7 +41,8 @@ variable can be used as operand without `eval`'ing it.
 
 When `Syntax::Feature::TrVars` is imported, it overloads the arguments
 of the `tr/*SEARCH*/*REPLACE*/` operator.
-When any of `*SEARCH*` or `*REPLACE*` has the form "`$name`",
+When performed within `trvars {...}` and
+any of `*SEARCH*` or `*REPLACE*` has the form "`$name`",
 then `$name` is taken as the name of a lexically scoped, simple,
 scalar variable, whose content is used as the actual operand.
 
@@ -56,6 +57,18 @@ The usage outside of an `eval` is possible but of low value.
 
 By specifying `no Syntax::Feature::TrVars`, this feature can be
 disabled.
+
+# FUNCTIONS
+
+## trvars
+
+```
+trvars {eval '...'};
+```
+
+The function `trvars` must be uses as a wrapper for the `eval`
+statement as otherwise lexical variables cannot be accessed from within
+the overloading routine.
 
 # ERRORS
 
@@ -72,7 +85,7 @@ use Syntax::Feature::TrVars;
 my $search = 'abc';
 my $replace = '123';
 my $s = 'fedcab';
-eval '$s =~ tr/$search/$replace/; 1' or warn $@;
+trvars {eval '$s =~ tr/$search/$replace/; 1'} or warn $@;
 # $s is 'fed321' now
 ```
 
@@ -89,7 +102,7 @@ use Syntax::Feature::TrVars;
 
 my $search = '//;warn-trapped;$@=~tr/';
 my $s = 'abcdefghijklmnopqrstuvwxyz/;-$=~';
-eval '$s =~ tr/$search//d; 1' or warn $@;
+trvars {eval '$s =~ tr/$search//d; 1'} or warn $@;
 # $s is 'bcfghijklmoqsuvxyz'
 ```
 
@@ -105,13 +118,6 @@ An exception thrown by `Syntax::Feature::TrVals` within an `eval` will
 be trapped.
 Make sure to capture such exceptions lest they get ignored.
 See ["EXAMPLES"](#examples).
-
-# BUGS
-
-There are some rare cases where [PadWalker](https://metacpan.org/pod/PadWalker) returns `undef` when
-it should not.
-Avoid equally named lexical variables at the same stack level as
-operands.
 
 # RESTRICTIONS
 

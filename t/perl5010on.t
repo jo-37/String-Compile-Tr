@@ -15,8 +15,7 @@ sub test_state {
         return;
     }
     my $s = 'ab';
-    ok lives {eval '$s =~ tr/$state/X/; 1' or die $@},
-        'run state', $@;
+    ok trvars {eval '$s =~ tr/$state/X/; 1'}, 'run state', $@;
     is $s, 'aX', 'use state';
 }
 test_state(-dummy);

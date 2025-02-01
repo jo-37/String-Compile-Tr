@@ -71,6 +71,16 @@ The usage outside of an C<eval> is possible but of low value.
 By specifying C<no Syntax::Feature::TrVars>, this feature can be
 disabled.
 
+=head1 FUNCTIONS
+
+=head2 trvars
+
+    trvars {eval '...'};
+
+The function C<trvars> must be uses as a wrapper for the C<eval>
+statement as otherwise lexical variables cannot be accessed from within
+the overloading routine.
+
 =head1 ERRORS
 
 When a referenced variable is not defined in the lexical scope of the

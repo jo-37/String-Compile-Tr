@@ -10,25 +10,24 @@ use Syntax::Feature::TrVars;
     my $y = '123';
 
     my $s = 'edcba';
-    ok lives {eval '$s =~ tr/$x/$y/; 1' or die $@}, 'no error, lexical', $@;
+    ok trvars {eval '$s =~ tr/$x/$y/; 1'}, 'no error, lexical', $@;
     is $s, 'ed321', '$s changed';
 
-    like dies {eval '$s =~ tr/$x/$z/; 1' or die $@}, qr/not defined/,
-        '$z not defined';
+    ok !trvars {eval '$s =~ tr/$x/$z/; 1'}, '$z not defined: not run',
+    like $@, qr/not defined/, '$z not defined: error msg';
 }
 
 {
     our $o = 'def';
     my $s = 'bcde';
-    ok lives {eval '$s =~ tr/$o/456/; 1' or die $@}, 'no error, dynamic', $@;
+    ok trvars {eval '$s =~ tr/$o/456/; 1'}, 'no error, dynamic', $@;
     is $s, 'bc45', '$s changed';
 }
 
 {
     my $t = substr $ENV{PATH}, 0, 0;
     my $s = 'defg';
-    ok lives {eval '$s =~ tr/$t//; 1' or die $@},
-        'tainted operand accepted', $@;
+    ok trvars {eval '$s =~ tr/$t//; 1'}, 'tainted operand accepted', $@;
 }
 
 {
@@ -36,36 +35,34 @@ use Syntax::Feature::TrVars;
     {
         local $glob = 'b';
         my $s = 'ab';
-        ok lives {eval '$s =~ tr/$glob/X/; 1' or die $@},
-            'run local', $@;
+        ok trvars {eval '$s =~ tr/$glob/X/; 1'}, 'run local', $@;
         is $s, 'aX', 'use local';
     }
 }
 
 {
+    my $todo = todo 'compile time usage';
     our $pre;
     BEGIN {
         $pre = 'bcd';
     }
     my $s = 'edcba';
-    $s =~ tr/$pre/456/;
+    ok trvars {eval {$s =~ tr/$pre/456/; 1}}, 'run compile time';
     is $s, 'e654a', 'compile time usage';
 }
 
-### ToDo
 {
-    my $todo = todo 'bug in PadWalker?';
+#    my $todo = todo 'bug in PadWalker?';
     my $b52 = 'a';
     my $s = 'ab';
-    ok lives {eval '$s =~ tr/$b52/X/; 1' or die $@},
-        'run b52', $@;
+    ok trvars {eval '$s =~ tr/$b52/X/; 1'}, 'run b52', $@;
+    is $s, 'Xb', 'modified b52';
 }
 {
     # The declaration of $b52 in any (?) scope after the previous block
-    # causes the test therein to fail.
+    # caused the test therein to fail.
     my $b52 = 'b';
 }
-###
 
 {
     no Syntax::Feature::TrVars;
