@@ -15,12 +15,12 @@ Syntax::Feature::TrVars - process variables in tr/// operands
 
 =head1 VERSION
 
-Version 0.00_01
+Version 0.01
 
 =cut
 
 our
-$VERSION = '0.00_01';
+$VERSION = '0.01';
 
 
 =head1 SYNOPSIS
@@ -30,7 +30,7 @@ $VERSION = '0.00_01';
     my $search = '/+=';
     my $replace = '-_';
     my $s = 'De/0xv5y3w8BpLF8ubOo+w==';
-    eval '$s =~ tr/$search/$replace/d';
+    trvars {eval '$s =~ tr/$search/$replace/d'};
     # $s = 'De-0xv5y3w8BpLF8ubOo_w'
 
     no Syntax::Feature::TrVars;
@@ -54,7 +54,8 @@ variable can be used as operand without C<eval>'ing it.
 
 When C<Syntax::Feature::TrVars> is imported, it overloads the arguments
 of the C<tr/*SEARCH*/*REPLACE*/> operator.
-When any of C<*SEARCH*> or C<*REPLACE*> has the form "C<$name>",
+When performed within C<trvars {...}> and
+any of C<*SEARCH*> or C<*REPLACE*> has the form "C<$name>",
 then C<$name> is taken as the name of a lexically scoped, simple,
 scalar variable, whose content is used as the actual operand.
 
@@ -84,7 +85,7 @@ A proposed usage of this module is:
     my $search = 'abc';
     my $replace = '123';
     my $s = 'fedcab';
-    eval '$s =~ tr/$search/$replace/; 1' or warn $@;
+    trvars {eval '$s =~ tr/$search/$replace/; 1'} or warn $@;
     # $s is 'fed321' now
 
 Note that result of C<tr> in scalar context is the number of characters
@@ -99,7 +100,7 @@ The example mentioned in L</DESCRIPTION> does no harm:
 
     my $search = '//;warn-trapped;$@=~tr/';
     my $s = 'abcdefghijklmnopqrstuvwxyz/;-$=~';
-    eval '$s =~ tr/$search//d; 1' or warn $@;
+    trvars {eval '$s =~ tr/$search//d; 1'} or warn $@;
     # $s is 'bcfghijklmoqsuvxyz'
 
 It is roughly equivalent to:
@@ -112,29 +113,6 @@ An exception thrown by C<Syntax::Feature::TrVals> within an C<eval> will
 be trapped.
 Make sure to capture such exceptions lest they get ignored.
 See L</EXAMPLES>.
-
-=head1 BUGS
-
-There seems to be an issue with L<PadWalker>.
-
-In combination with C<Syntax::Feature::TrVars>, L<PadWalker> does not
-provide the content of a lexical variable if it is re-declared
-afterwards, even in a different context.
-
-This does not work:
-
-    my $s = 'ab';
-    {
-        my $x = 'a';
-        eval 'tr /$x/X/; 1' or warn $@;
-    }
-    {
-        my $x = 'b';
-    }
-
-It will print C<"$x" not defined>.
-
-Use C<local our $x> to circumvent this problem.
 
 =head1 RESTRICTIONS
 
@@ -161,6 +139,24 @@ L<PadWalker>
 
 =cut
 
+require Exporter;
+our @ISA = qw(Exporter);
+our @EXPORT_OK = qw(trvars);
+our @EXPORT = @EXPORT_OK;
+
+sub trvars(&) {
+    my $code = shift;
+    my $err;
+    {
+        local ($@, $!, $?);
+        local our $trvars = 1;
+        $code->() and return 1;
+        $err = $@;
+    }
+    $@ = $err;
+    0;
+}
+
 sub _ovl_tr {
     my (undef, $str, $context) = @_;
     # pass everything unmodified that is not an operand of tr///
@@ -169,9 +165,13 @@ sub _ovl_tr {
     # pass regular operands
     return $str unless $str =~ /^\$/;
 
+    # not called via trvars()
+    our $trvars;
+    return $str unless $trvars;
+
     # search for variable
     for my $peek (\&peek_my, \&peek_our) {
-        my $vars = $peek->(1);
+        my $vars = $peek->(3);
         next unless exists $vars->{$str};
         my $ret = ${$vars->{$str}};
         return $ret if defined $ret;
@@ -184,6 +184,7 @@ sub _ovl_tr {
 
 sub import {
     overload::constant q => \&_ovl_tr;
+    __PACKAGE__->export_to_level(1, @_);
 }
 
 sub unimport {
