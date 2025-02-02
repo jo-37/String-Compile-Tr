@@ -4,7 +4,7 @@ String::Compile::Tr - compile tr/// expressions
 
 # VERSION
 
-Version 0.02\_01
+Version 0.01\_01
 
 # SYNOPSIS
 
@@ -26,7 +26,7 @@ The drawback of this approach are possible unwanted side effects induced
 by the variables' content, e.g.
 
 ```
-$search = '//;warn-trapped;$@=~tr/';
+$search = '//,warn-trapped,$@=~tr/';
 eval "tr/$search//d";
 ```
 
@@ -48,7 +48,7 @@ tr///` and without it operates on `$_`.
 ## trgen
 
 ```
-trgen(search, [replace], [options])
+trgen(search, replace, [options])
 ```
 
 `trgen` returns an anonymous subroutine that will perform a similar
@@ -78,10 +78,9 @@ $tr->($s);
 or
 
 ```perl
-my @list = qw(foo bar);
-my $tr = trgen('abf', 'etg');
+my @list = qw(axy bxy cxy);
 $tr->() for @list;
-# @list is now ('goo', 'ter');
+# @list is now ('1xy', '2xy', '3xy');
 ```
 
 # RESTRICTIONS
