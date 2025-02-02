@@ -19,15 +19,27 @@ use String::Compile::Tr;
 {
     my $x = 'abc';
     my $y = '123';
-    is trgen('abc', '123', 'r')->('edcba'), 'ed321', 'use options';
+    is trgen($x, $y, 'r')->('edcba'), 'ed321', 'use options';
 }
 
 {
-    my $tr = trgen('abc', 'ABC');
+    my $x = 'abc';
+    my $y = 'ABC';
+    my $tr = trgen($x, $y);
     my @arr = qw(axy bxy cxy);
     $tr->() for @arr;
     is [@arr], [qw(Axy Bxy Cxy)], 'multiple calls on $_';
 }
+
+{
+    my $tainted = substr $ENV{PATH}, 0, 0;
+    my $x = 'abc' . $tainted;
+    my $y = '123' . $tainted;
+    my $opt = 'r' . $tainted;
+    is my $tr = trgen($x, $y, $opt), D(), 'tainted compiles', $@;
+    is $tr->('edcba'), 'ed321', 'tainted runs';
+}
+
 
 done_testing;
 

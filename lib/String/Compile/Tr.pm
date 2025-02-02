@@ -1,11 +1,8 @@
-package String::Compile::Tr;
-
 use 5.006;
 use strict;
 use warnings;
-use Carp;
-use overload;
-use PadWalker qw(peek_my peek_our);
+
+package String::Compile::Tr;
 
 =encoding UTF-8
 
@@ -15,12 +12,12 @@ String::Compile::Tr - compile tr/// expressions
 
 =head1 VERSION
 
-Version 0.02_01
+Version 0.01_01
 
 =cut
 
 our
-$VERSION = '0.02_01';
+$VERSION = '0.01_01';
 
 
 =head1 SYNOPSIS
@@ -40,7 +37,7 @@ variables is to C<eval> a string with interpolated operands.
 The drawback of this approach are possible unwanted side effects induced
 by the variables' content, e.g.
 
-    $search = '//;warn-trapped;$@=~tr/';
+    $search = '//,warn-trapped,$@=~tr/';
     eval "tr/$search//d";
 
 C<String::Compile::Tr> offers an alternative where the content of a
@@ -60,7 +57,7 @@ tr///> and without it operates on C<$_>.
 
 =head2 trgen
 
-    trgen(search, [replace], [options])
+    trgen(search, replace, [options])
 
 C<trgen> returns an anonymous subroutine that will perform a similar
 operation as C<tr/search/replace/options>.
@@ -86,10 +83,9 @@ A proposed usage of this module is:
 
 or
 
-    my @list = qw(foo bar);
-    my $tr = trgen('abf', 'etg');
+    my @list = qw(axy bxy cxy);
     $tr->() for @list;
-    # @list is now ('goo', 'ter');
+    # @list is now ('1xy', '2xy', '3xy');
 
 =head1 RESTRICTIONS
 
@@ -118,34 +114,12 @@ its oprands.
 
 =cut
 
-package String::Compile::Tr::Overload;
-use overload;
-
-sub _ovl_tr {
-    my (undef, $str, $context) = @_;
-    our ($search, $replace);
-
-    return $str unless $context eq 'tr';
-    return $search if $str =~ /^:search:$/;
-    return $replace if $str =~ /^:replace:$/;
-    
-    $str;
-}
-
-sub import {
-    overload::constant q => \&_ovl_tr;
-}
-
-package String::Compile::Tr;
+use String::Compile::Tr::Overload;
 
 use Exporter::Shiny our @EXPORT = qw(trgen);
 
 *search = *String::Compile::Tr::Overload::search;
 *replace = *String::Compile::Tr::Overload::replace;
-
-BEGIN {
-    String::Compile::Tr::Overload->import;
-}
 
 sub trgen {
     local our ($search, $replace);
@@ -157,10 +131,8 @@ sub trgen {
     $opt = '' unless defined $opt;
     my $template = <<'EOS';
     sub {
-        if (@_) {
-            return $_[0] =~ tr/:search:/:replace:/%1$s;
-        }
-        tr/:search:/:replace:/%1$s;
+        local *_ = \$_[0] if @_;
+        tr/:search:/:replace:/%s;
     }
 EOS
     my $code = sprintf $template, $opt;
