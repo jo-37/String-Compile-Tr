@@ -50,7 +50,7 @@ This sub is imported by default with C<use String::Compile::Tr>.
 C<trgen(*SEARCH*, *REPLACE*, *OPT*)> returns a sub ref that performs
 almost the same as C<tr/*SEARCH*/*REPLACE*/*OPT*>, but allows variable
 operands.
-It the sub is called with an argument C<$str>, it behaves like C<$str =~
+If the sub is called with an argument C<$str>, it behaves like C<$str =~
 tr///> and without it operates on C<$_>.
 
 =head1 FUNCTIONS

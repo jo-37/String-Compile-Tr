@@ -40,7 +40,7 @@ This sub is imported by default with `use String::Compile::Tr`.
 `trgen(*SEARCH*, *REPLACE*, *OPT*)` returns a sub ref that performs
 almost the same as `tr/*SEARCH*/*REPLACE*/*OPT*`, but allows variable
 operands.
-It the sub is called with an argument `$str`, it behaves like `$str =~
+If the sub is called with an argument `$str`, it behaves like `$str =~
 tr///` and without it operates on `$_`.
 
 # FUNCTIONS
