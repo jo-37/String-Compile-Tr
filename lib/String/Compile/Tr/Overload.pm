@@ -25,7 +25,10 @@ $VERSION = '0.01_01';
 
 =head1 DESCRIPTION
 
-This module overloads the operands of a C<tr///> operator.
+This module overloads the operands of a C<tr///> operator and replaces
+the strings C<:search:> and C<:replace:> with the contents of the
+variables C<$String::Compile::Tr::Overload::search> resp.
+C<$String::Compile::Tr::Overload::replace>.
 
 =head1 AUTHOR
 

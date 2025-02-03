@@ -71,7 +71,7 @@ C<trgen> will throw an exception if an invalid option is specified.
 
 =head1 EXAMPLES
 
-A proposed usage of this module is:
+Proposed usages of this module are:
 
     use String::Compile::Tr;
 
