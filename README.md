@@ -59,6 +59,8 @@ Otherwise it operates on the default input `$_`.
 When the `tr` operation cannot be compiled, `trgen` will return
 `undef`.
 
+`trgen` will throw an exception if an invalid option is specified.
+
 # EXAMPLES
 
 A proposed usage of this module is:

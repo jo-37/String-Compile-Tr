@@ -67,6 +67,8 @@ Otherwise it operates on the default input C<$_>.
 When the C<tr> operation cannot be compiled, C<trgen> will return
 C<undef>.
 
+C<trgen> will throw an exception if an invalid option is specified.
+
 =head1 EXAMPLES
 
 A proposed usage of this module is:
