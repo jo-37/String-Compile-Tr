@@ -21,7 +21,7 @@ trgen($search, $replace, 'd')->($s);
 # DESCRIPTION
 
 The usual approach when operands of a `tr///` operator shall be
-variables is to `eval` a string with interpolated operands.
+variables is to apply `eval` on a string to interpolate the operands.
 The drawback of this approach are possible unwanted side effects induced
 by the variables' content, e.g.
 
@@ -33,13 +33,11 @@ eval "tr/$search//d";
 `String::Compile::Tr` offers an alternative where the content of a
 variable can be used as operand without `eval`'ing it. 
 
-The sub named `trgen` provides the functionally of the `tr///`
-operator on variables without `eval`'ing them.
-This sub is imported by default with `use String::Compile::Tr`.
+`trgen(*SEARCH*, *REPLACE*, *OPT*)` compiles an anonymous sub that
+performs almost the same operation as `tr/*SEARCH*/*REPLACE*/*OPT*`,
+but allows variable operands.
 
-`trgen(*SEARCH*, *REPLACE*, *OPT*)` returns a sub ref that performs
-almost the same as `tr/*SEARCH*/*REPLACE*/*OPT*`, but allows variable
-operands.
+`trgen` is imported by default by `use String::Compile::Tr`.
 
 # FUNCTIONS
 
@@ -49,10 +47,10 @@ operands.
 trgen(search, replace, [options])
 ```
 
-`trgen` returns an anonymous subroutine that will perform a similar
+`trgen` returns an anonymous subroutine that performs an almost identical 
 operation as `tr/search/replace/options`.
-The `tr` target may be given as an argument to the generated sub.
-Otherwise it operates on the default input `$_`.
+The `tr` target may be given as an argument to the generated sub
+or is the default input `$_` otherwise.
 
 # ERRORS
 
@@ -101,6 +99,8 @@ the same terms as the Perl 5 programming language system itself.
 # SEE ALSO
 
 ["tr/\*SEARCHLIST\*/\*REPLACEMENTLIST\*/cdsr" in perlop](https://metacpan.org/pod/perlop#tr-SEARCHLIST-REPLACEMENTLIST-cdsr)
+
+["eval" in perlfunc](https://metacpan.org/pod/perlfunc#eval)
 
 [Exporter::Tiny::Manual::Importing](https://metacpan.org/pod/Exporter%3A%3ATiny%3A%3AManual%3A%3AImporting)
 

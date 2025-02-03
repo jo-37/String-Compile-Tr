@@ -33,7 +33,7 @@ $VERSION = '0.01_01';
 =head1 DESCRIPTION
 
 The usual approach when operands of a C<tr///> operator shall be
-variables is to C<eval> a string with interpolated operands.
+variables is to apply C<eval> on a string to interpolate the operands.
 The drawback of this approach are possible unwanted side effects induced
 by the variables' content, e.g.
 
@@ -43,13 +43,12 @@ by the variables' content, e.g.
 C<String::Compile::Tr> offers an alternative where the content of a
 variable can be used as operand without C<eval>'ing it. 
 
-The sub named C<trgen> provides the functionally of the C<tr///>
-operator on variables without C<eval>'ing them.
-This sub is imported by default with C<use String::Compile::Tr>.
+C<trgen(*SEARCH*, *REPLACE*, *OPT*)> compiles an anonymous sub that
+performs almost the same operation as C<tr/*SEARCH*/*REPLACE*/*OPT*>,
+but allows variable operands.
 
-C<trgen(*SEARCH*, *REPLACE*, *OPT*)> returns a sub ref that performs
-almost the same as C<tr/*SEARCH*/*REPLACE*/*OPT*>, but allows variable
-operands.
+C<trgen> is imported by default by C<use String::Compile::Tr>.
+
 
 =head1 FUNCTIONS
 
@@ -57,10 +56,11 @@ operands.
 
     trgen(search, replace, [options])
 
-C<trgen> returns an anonymous subroutine that will perform a similar
+C<trgen> returns an anonymous subroutine that performs an almost identical 
 operation as C<tr/search/replace/options>.
-The C<tr> target may be given as an argument to the generated sub.
-Otherwise it operates on the default input C<$_>.
+The C<tr> target may be given as an argument to the generated sub
+or is the default input C<$_> otherwise.
+
 
 =head1 ERRORS
 
@@ -107,6 +107,8 @@ the same terms as the Perl 5 programming language system itself.
 =head1 SEE ALSO
 
 L<perlop/"tr/*SEARCHLIST*/*REPLACEMENTLIST*/cdsr">
+
+L<perlfunc/eval>
 
 L<Exporter::Tiny::Manual::Importing>
 
