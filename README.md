@@ -40,8 +40,6 @@ This sub is imported by default with `use String::Compile::Tr`.
 `trgen(*SEARCH*, *REPLACE*, *OPT*)` returns a sub ref that performs
 almost the same as `tr/*SEARCH*/*REPLACE*/*OPT*`, but allows variable
 operands.
-If the sub is called with an argument `$str`, it behaves like `$str =~
-tr///` and without it operates on `$_`.
 
 # FUNCTIONS
 
@@ -53,7 +51,8 @@ trgen(search, replace, [options])
 
 `trgen` returns an anonymous subroutine that will perform a similar
 operation as `tr/search/replace/options`.
-It can be use multiple times on different targets.
+The `tr` target may be given as an argument to the generated sub.
+Otherwise it operates on the default input `$_`.
 
 # ERRORS
 
@@ -82,6 +81,10 @@ my @list = qw(axy bxy cxy);
 $tr->() for @list;
 # @list is now ('1xy', '2xy', '3xy');
 ```
+
+or
+    my $trr = trgen($search, $replace, 'r');
+    print $trr->('fedcba');
 
 # RESTRICTIONS
 
