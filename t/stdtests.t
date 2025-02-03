@@ -40,6 +40,8 @@ use String::Compile::Tr;
     is $tr->('edcba'), 'ed321', 'tainted runs';
 }
 
+like dies {trgen('', '', 'x')}, qr/options invalid/, 'invalid option';
+
 
 done_testing;
 

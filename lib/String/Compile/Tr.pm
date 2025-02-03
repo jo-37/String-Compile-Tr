@@ -50,8 +50,6 @@ This sub is imported by default with C<use String::Compile::Tr>.
 C<trgen(*SEARCH*, *REPLACE*, *OPT*)> returns a sub ref that performs
 almost the same as C<tr/*SEARCH*/*REPLACE*/*OPT*>, but allows variable
 operands.
-If the sub is called with an argument C<$str>, it behaves like C<$str =~
-tr///> and without it operates on C<$_>.
 
 =head1 FUNCTIONS
 
@@ -61,7 +59,8 @@ tr///> and without it operates on C<$_>.
 
 C<trgen> returns an anonymous subroutine that will perform a similar
 operation as C<tr/search/replace/options>.
-It can be use multiple times on different targets.
+The C<tr> target may be given as an argument to the generated sub.
+Otherwise it operates on the default input C<$_>.
 
 =head1 ERRORS
 
@@ -86,6 +85,10 @@ or
     my @list = qw(axy bxy cxy);
     $tr->() for @list;
     # @list is now ('1xy', '2xy', '3xy');
+
+or
+    my $trr = trgen($search, $replace, 'r');
+    print $trr->('fedcba');
 
 =head1 RESTRICTIONS
 
@@ -114,6 +117,7 @@ its oprands.
 
 =cut
 
+use Carp;
 use String::Compile::Tr::Overload;
 
 use Exporter::Shiny our @EXPORT = qw(trgen);
@@ -129,6 +133,7 @@ sub trgen {
     $options = '' unless defined $options;
     my ($opt) = $options =~ /^([cdsr]*)$/;
     $opt = '' unless defined $opt;
+    croak "options invalid: $options" if $options && $options ne $opt;
     my $template = <<'EOS';
     sub {
         local *_ = \$_[0] if @_;

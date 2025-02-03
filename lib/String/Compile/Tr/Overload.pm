@@ -49,7 +49,7 @@ use overload;
 sub _ovl_tr {
     our ($search, $replace);
 
-    return $str unless $_[2] eq 'tr';
+    return $_[1] unless $_[2] eq 'tr';
     return "$search" if $_[1] eq ':search:';
     return "$replace" if $_[1] eq ':replace:';
     
