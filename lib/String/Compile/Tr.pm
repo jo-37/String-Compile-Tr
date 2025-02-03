@@ -27,7 +27,7 @@ $VERSION = '0.01_01';
     my $search = '/+=';
     my $replace = '-_';
     my $s = 'De/0xv5y3w8BpLF8ubOo+w==';
-    trgen($search, $replace)->($s);
+    trgen($search, $replace, 'd')->($s);
     # $s = 'De-0xv5y3w8BpLF8ubOo_w'
 
 =head1 DESCRIPTION
@@ -76,7 +76,7 @@ A proposed usage of this module is:
     my $search = 'abc';
     my $replace = '123';
     my $tr = trgen($search, $replace);
-    my $s = 'fedcab';
+    my $s = 'fedcba';
     $tr->($s);
     # $s is 'fed321' now
 
@@ -87,8 +87,8 @@ or
     # @list is now ('1xy', '2xy', '3xy');
 
 or
-    my $trr = trgen($search, $replace, 'r');
-    print $trr->('fedcba');
+
+    print trgen($search, $replace, 'r')->('fedcba'); # 'fed321'
 
 =head1 RESTRICTIONS
 

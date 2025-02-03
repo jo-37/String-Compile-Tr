@@ -14,7 +14,7 @@ use String::Compile::Tr;
 my $search = '/+=';
 my $replace = '-_';
 my $s = 'De/0xv5y3w8BpLF8ubOo+w==';
-trgen($search, $replace)->($s);
+trgen($search, $replace, 'd')->($s);
 # $s = 'De-0xv5y3w8BpLF8ubOo_w'
 ```
 
@@ -69,7 +69,7 @@ use String::Compile::Tr;
 my $search = 'abc';
 my $replace = '123';
 my $tr = trgen($search, $replace);
-my $s = 'fedcab';
+my $s = 'fedcba';
 $tr->($s);
 # $s is 'fed321' now
 ```
@@ -83,8 +83,10 @@ $tr->() for @list;
 ```
 
 or
-    my $trr = trgen($search, $replace, 'r');
-    print $trr->('fedcba');
+
+```
+print trgen($search, $replace, 'r')->('fedcba'); # 'fed321'
+```
 
 # RESTRICTIONS
 
