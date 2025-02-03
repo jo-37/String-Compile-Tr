@@ -61,7 +61,7 @@ When the `tr` operation cannot be compiled, `trgen` will return
 
 # EXAMPLES
 
-A proposed usage of this module is:
+Proposed usages of this module are:
 
 ```perl
 use String::Compile::Tr;
