@@ -72,19 +72,11 @@ my $tr = trgen($search, $replace);
 my $s = 'fedcba';
 $tr->($s);
 # $s is 'fed321' now
-```
 
-or
-
-```perl
 my @list = qw(axy bxy cxy);
 $tr->() for @list;
 # @list is now ('1xy', '2xy', '3xy');
-```
 
-or
-
-```
 print trgen($search, $replace, 'r')->('fedcba'); # 'fed321'
 ```
 
