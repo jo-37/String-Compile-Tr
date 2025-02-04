@@ -54,10 +54,12 @@ or is the default input `$_` otherwise.
 
 # ERRORS
 
+`trgen` will throw an exception if an invalid option is specified.
+
 When the `tr` operation cannot be compiled, `trgen` will return
 `undef`.
-
-`trgen` will throw an exception if an invalid option is specified.
+I don't know of a situation where this would happen.
+Please report an issue if you encounter one.
 
 # EXAMPLES
 
@@ -84,6 +86,9 @@ print trgen($search, $replace, 'r')->('fedcba'); # 'fed321'
 
 Character ranges are not supported in the search and replace lists.
 All characters are interpreted literally.
+This is caused by the fact that `tr` does not support these neither.
+It's the compiler that expands character ranges in `tr`'s operands
+before handing them over.
 
 # AUTHOR
 
