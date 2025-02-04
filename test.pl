@@ -3,7 +3,6 @@
 use Test2::V0;
 use warnings FATAL => 'all';
 use Carp::Always;
-use Regexp::Tr;
 
 use String::Compile::Tr;
 
@@ -33,22 +32,15 @@ use String::Compile::Tr;
 
 {
     my $search = '//,warn-trapped,$@=~tr/';
-    my $str = join('', 'a' .. 'z') . '/,-$@=~';
-    my $str1 = $str;
-    my $str2 = $str;
-    ok no_warnings {trgen($search, '', 'd')->($str)}, "not eval'ed";
+    my $str1 = join('', 'a' .. 'z') . '/,-$@=~';
+    my $str2 = $str1;
+    ok no_warnings {trgen($search, '', 'd')->($str1)}, "not eval'ed";
     my $expected = 'bcfghijklmoqsuvxyz';
-    is $str, $expected, 'deleted chars';
+    is $str1, $expected, 'deleted chars';
 
-    like warning {eval "\$str1 =~ tr/$search//d"}, qr/-trapped/, 'eval trapped';
-
-    my $todo = todo 'Regexp::Tr';
-    my $tr = Regexp::Tr->new($search, '', 'd');
-    ok no_warnings {$tr->bind(\$str2)}, "not eval'ed";
+    my $todo = todo 'trapping eval';
+    ok no_warnings {eval "\$str2 =~ tr/$search//d"}, 'eval';
     is $str2, $expected, 'deleted chars';
-    
 }
-
-
 
 done_testing;
