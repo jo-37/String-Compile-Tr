@@ -68,8 +68,6 @@ C<trgen> will throw an exception if an invalid option is specified.
 
 When the C<tr> operation cannot be compiled, C<trgen> will return
 C<undef>.
-I don't know of a situation where this would happen.
-Please report an issue if you encounter one.
 
 =head1 EXAMPLES
 

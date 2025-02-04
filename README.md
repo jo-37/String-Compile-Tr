@@ -58,8 +58,6 @@ or is the default input `$_` otherwise.
 
 When the `tr` operation cannot be compiled, `trgen` will return
 `undef`.
-I don't know of a situation where this would happen.
-Please report an issue if you encounter one.
 
 # EXAMPLES
 
