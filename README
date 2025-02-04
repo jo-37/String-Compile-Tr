@@ -18,8 +18,8 @@ perldoc command.
 
 You can also look for information at:
 
-    RT, CPAN's request tracker (report bugs here)
-        https://rt.cpan.org/NoAuth/Bugs.html?Dist=String-Compile-Tr
+    Github (report bugs here)
+        https://github.com/jo-37/String-Compile-Tr
 
     CPAN Ratings
         https://cpanratings.perl.org/d/String-Compile-Tr

@@ -64,10 +64,12 @@ or is the default input C<$_> otherwise.
 
 =head1 ERRORS
 
+C<trgen> will throw an exception if an invalid option is specified.
+
 When the C<tr> operation cannot be compiled, C<trgen> will return
 C<undef>.
-
-C<trgen> will throw an exception if an invalid option is specified.
+I don't know of a situation where this would happen.
+Please report an issue if you encounter one.
 
 =head1 EXAMPLES
 
@@ -92,6 +94,9 @@ Proposed usages of this module are:
 
 Character ranges are not supported in the search and replace lists.
 All characters are interpreted literally.
+This is caused by the fact that C<tr> does not support these neither.
+It's the compiler that expands character ranges in C<tr>'s operands
+before handing them over.
 
 =head1 AUTHOR
 

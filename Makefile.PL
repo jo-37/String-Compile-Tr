@@ -18,9 +18,9 @@ my %WriteMakefileArgs = (
         'Test2::V0' => '0',
     },
     PREREQ_PM => {
-        overload   => '0',
-        Carp       => '0',
-        PadWalker  => '0',
+        overload => '0',
+        Carp => '0',
+        'Exporter::Shiny'  => '0',
     },
     clean => {FILES => "String-Compile-Tr-*"},
     META_MERGE => {
