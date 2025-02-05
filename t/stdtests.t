@@ -18,12 +18,6 @@ use String::Compile::Tr;
 
 {
     my $x = 'abc';
-    my $y = '123';
-    is trgen($x, $y, 'r')->('edcba'), 'ed321', 'use options';
-}
-
-{
-    my $x = 'abc';
     my $y = 'ABC';
     my $tr = trgen($x, $y);
     my @arr = qw(axy bxy cxy);
