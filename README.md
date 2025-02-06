@@ -4,7 +4,7 @@ String::Compile::Tr - compile tr/// expressions
 
 # VERSION
 
-Version 0.03
+Version 0.03\_01
 
 # SYNOPSIS
 
