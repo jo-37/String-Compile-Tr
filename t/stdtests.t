@@ -26,6 +26,14 @@ use String::Compile::Tr;
 }
 
 {
+    my $x = 'abc';
+    my $s = 'fedcb';
+    my $tr = trgen($x, '', 'dc');
+    $tr->($s);
+    is $s, 'cb', 'use options';
+}
+
+{
     my $tainted = substr $ENV{PATH}, 0, 0;
     my $x = 'abc' . $tainted;
     my $y = '123' . $tainted;
