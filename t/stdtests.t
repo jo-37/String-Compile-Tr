@@ -37,9 +37,11 @@ use String::Compile::Tr;
     my $tainted = substr $ENV{PATH}, 0, 0;
     my $x = 'abc' . $tainted;
     my $y = '123' . $tainted;
-    my $opt = 'r' . $tainted;
+    my $opt = 's' . $tainted;
+    my $s = 'eeddccbbaa'. $tainted;
     is my $tr = trgen($x, $y, $opt), D(), 'tainted compiles', $@;
-    is $tr->('edcba'), 'ed321', 'tainted runs';
+    $tr->($s);
+    is $s, 'eedd321', '$s changed';
 }
 
 like dies {trgen('', '', 'x')}, qr/options invalid/, 'invalid option';
