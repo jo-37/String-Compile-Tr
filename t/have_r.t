@@ -1,4 +1,4 @@
-#!perl -T
+#!perl
 
 use Test2::Require::Perl 'v5.14';
 use 5.014;

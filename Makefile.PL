@@ -2,6 +2,7 @@ use 5.006;
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use Config;
 
 my %WriteMakefileArgs = (
     NAME             => 'String::Compile::Tr',
@@ -12,6 +13,7 @@ my %WriteMakefileArgs = (
     MIN_PERL_VERSION => '5.006',
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => '0',
+        'Config' => '0',
     },
     TEST_REQUIRES => {
         'Test::More' => '0',
@@ -24,6 +26,7 @@ my %WriteMakefileArgs = (
         'Exporter::Shiny'  => '0',
     },
     clean => {FILES => "String-Compile-Tr-*"},
+    test => {TESTS => 't/*.t'},
     META_MERGE => {
         "meta-spec" => { version => 2 },
         resources => {
@@ -35,6 +38,10 @@ my %WriteMakefileArgs = (
         },
     },
 );
+
+# Tainted tests
+$WriteMakefileArgs{test}{TESTS} .= ' tt/*.t'
+    unless $Config{ccflags} =~ /-DNO_TAINT_SUPPORT\b/;
 
 # Compatibility with old versions of ExtUtils::MakeMaker
 unless (eval { ExtUtils::MakeMaker->VERSION('6.64'); 1 }) {
