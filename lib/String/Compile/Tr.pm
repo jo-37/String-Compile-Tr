@@ -1,4 +1,4 @@
-use 5.006;
+use 5.010;
 use strict;
 use warnings;
 
@@ -42,6 +42,8 @@ by the variables' content, e.g.
 
 C<String::Compile::Tr> offers an alternative where the content of a
 variable can be used as operand without C<eval>'ing it. 
+Instead the operands of a C<tr///> operator are overloaded at runtime
+inside an constant C<eval '...'>.
 
 C<trgen(*SEARCH*, *REPLACE*, *OPT*)> compiles an anonymous sub that
 performs almost the same operation as C<tr/*SEARCH*/*REPLACE*/*OPT*>,
@@ -64,10 +66,8 @@ or is the default input C<$_> otherwise.
 
 =head1 ERRORS
 
-C<trgen> will throw an exception if an invalid option is specified.
-
-When the C<tr> operation cannot be compiled, C<trgen> will return
-C<undef>.
+C<trgen> will throw an exception if an invalid option is specified
+or the C<tr> operation cannot be compiled.
 
 =head1 EXAMPLES
 
@@ -95,6 +95,8 @@ All characters are interpreted literally.
 This is caused by the fact that C<tr> does not support these neither.
 It's the compiler that expands character ranges in C<tr>'s operands
 before handing them over.
+
+Overloading constants in C<eval '...'> requires perl v5.10.
 
 =head1 AUTHOR
 

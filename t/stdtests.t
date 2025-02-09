@@ -1,6 +1,6 @@
 #!perl
 
-use 5.006;
+use 5.010;
 use Test2::V0;
 
 use String::Compile::Tr;

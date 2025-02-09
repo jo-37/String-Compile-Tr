@@ -32,6 +32,8 @@ eval "tr/$search//d";
 
 `String::Compile::Tr` offers an alternative where the content of a
 variable can be used as operand without `eval`'ing it. 
+Instead the operands of a `tr///` operator are overloaded at runtime
+inside an constant `eval '...'`.
 
 `trgen(*SEARCH*, *REPLACE*, *OPT*)` compiles an anonymous sub that
 performs almost the same operation as `tr/*SEARCH*/*REPLACE*/*OPT*`,
@@ -54,10 +56,8 @@ or is the default input `$_` otherwise.
 
 # ERRORS
 
-`trgen` will throw an exception if an invalid option is specified.
-
-When the `tr` operation cannot be compiled, `trgen` will return
-`undef`.
+`trgen` will throw an exception if an invalid option is specified
+or the `tr` operation cannot be compiled.
 
 # EXAMPLES
 
@@ -87,6 +87,8 @@ All characters are interpreted literally.
 This is caused by the fact that `tr` does not support these neither.
 It's the compiler that expands character ranges in `tr`'s operands
 before handing them over.
+
+Overloading constants in `eval '...'` requires perl v5.10.
 
 # AUTHOR
 

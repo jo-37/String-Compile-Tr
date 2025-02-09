@@ -1,4 +1,4 @@
-use 5.006;
+use 5.010;
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
@@ -10,7 +10,7 @@ my %WriteMakefileArgs = (
     VERSION_FROM     => 'lib/String/Compile/Tr.pm',
     ABSTRACT_FROM    => 'lib/String/Compile/Tr.pm',
     LICENSE          => 'perl_5',
-    MIN_PERL_VERSION => '5.006',
+    MIN_PERL_VERSION => '5.010',
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => '0',
         'Config' => '0',
