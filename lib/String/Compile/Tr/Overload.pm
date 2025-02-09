@@ -12,12 +12,12 @@ String::Compile::Tr::Overload - overload tr/// operands
 
 =head1 VERSION
 
-Version 0.05
+Version 0.05_01
 
 =cut
 
 our
-$VERSION = '0.05';
+$VERSION = '0.05_01';
 
 =head1 SYNOPSIS
 
