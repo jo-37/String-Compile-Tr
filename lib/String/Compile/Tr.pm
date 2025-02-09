@@ -137,15 +137,17 @@ sub trgen {
     my ($opt) = $options =~ /^([cdsr]*)$/;
     $opt = '' unless defined $opt;
     croak "options invalid: $options" if $options && $options ne $opt;
+    my $ret;
     my $template = <<'EOS';
-    sub {
+    $ret = sub {
         local *_ = \$_[0] if @_;
         tr/:search:/:replace:/%s;
-    }
+    }; 1
 EOS
     my $code = sprintf $template, $opt;
 
-    eval $code;
+    eval $code or croak $@;
+    $ret;
 }
 
 1;

@@ -17,7 +17,7 @@ my %WriteMakefileArgs = (
     },
     TEST_REQUIRES => {
         'Test::More' => '0',
-        'Test2::V0' => '0',
+        'Test2::V0' => '0.000060',
         'Scalar::Util' => '0',
     },
     PREREQ_PM => {
