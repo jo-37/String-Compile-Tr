@@ -33,7 +33,7 @@ eval "tr/$search//d";
 `String::Compile::Tr` offers an alternative where the content of a
 variable can be used as operand without `eval`'ing it. 
 Instead the operands of a `tr///` operator are overloaded at runtime
-inside an constant `eval '...'`.
+inside a constant `eval '...'`.
 
 `trgen(*SEARCH*, *REPLACE*, *OPT*)` compiles an anonymous sub that
 performs almost the same operation as `tr/*SEARCH*/*REPLACE*/*OPT*`,

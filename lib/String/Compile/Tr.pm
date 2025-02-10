@@ -43,7 +43,7 @@ by the variables' content, e.g.
 C<String::Compile::Tr> offers an alternative where the content of a
 variable can be used as operand without C<eval>'ing it. 
 Instead the operands of a C<tr///> operator are overloaded at runtime
-inside an constant C<eval '...'>.
+inside a constant C<eval '...'>.
 
 C<trgen(*SEARCH*, *REPLACE*, *OPT*)> compiles an anonymous sub that
 performs almost the same operation as C<tr/*SEARCH*/*REPLACE*/*OPT*>,
