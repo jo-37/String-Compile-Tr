@@ -15,12 +15,14 @@ subtest 'run on arg' => sub {
     my $y = '123';
     my $s = 'edcba';
     my $tr;
+    my $count;
 
-    plan 4;
+    plan 5;
     SKIP: {
         ok lives {$tr = trgen($x, $y)}, 'compile', $@ or skip 'gen failed', 3;
         ref_ok $tr, 'CODE', 'is sub' or skip 'no code', 2;
-        ok lives {$tr->($s)}, 'call', $@ or skip 'call failed';
+        ok lives {$count = $tr->($s)}, 'call', $@ or skip 'call failed';
+        is $count, 3, 'count';
         is $s, 'ed321', 'result';
     }
 };
