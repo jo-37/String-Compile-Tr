@@ -29,6 +29,14 @@ my %WriteMakefileArgs = (
     test => {TESTS => 't/*.t'},
     META_MERGE => {
         "meta-spec" => { version => 2 },
+        provides => {
+            'String::Compile::Tr' => {
+                file => 'lib/String/Compile/Tr.pm',
+            },
+            'String::Compile::Tr::Overload' => {
+                file => 'lib/String/Compile/Tr/Overload.pm',
+            },
+        },
         resources => {
             repository => {
                 type => 'git',
