@@ -4,6 +4,9 @@ use warnings;
 use ExtUtils::MakeMaker;
 use Config;
 
+my
+$VERSION = '0.06_01';
+
 my %WriteMakefileArgs = (
     NAME             => 'String::Compile::Tr',
     AUTHOR           => q{Jörg Sommrey <git@sommrey.de>},
@@ -32,9 +35,11 @@ my %WriteMakefileArgs = (
         provides => {
             'String::Compile::Tr' => {
                 file => 'lib/String/Compile/Tr.pm',
+                version => $VERSION,
             },
             'String::Compile::Tr::Overload' => {
                 file => 'lib/String/Compile/Tr/Overload.pm',
+                version => $VERSION,
             },
         },
         resources => {
