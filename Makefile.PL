@@ -4,13 +4,12 @@ use warnings;
 use ExtUtils::MakeMaker;
 use Config;
 
-my
-$VERSION = '0.06_01';
+my $VERSION = '0.06_01';
 
 my %WriteMakefileArgs = (
     NAME             => 'String::Compile::Tr',
     AUTHOR           => q{Jörg Sommrey <git@sommrey.de>},
-    VERSION_FROM     => 'lib/String/Compile/Tr.pm',
+    VERSION          => $VERSION,
     ABSTRACT_FROM    => 'lib/String/Compile/Tr.pm',
     LICENSE          => 'perl_5',
     MIN_PERL_VERSION => '5.010',
@@ -41,6 +40,9 @@ my %WriteMakefileArgs = (
                 file => 'lib/String/Compile/Tr/Overload.pm',
                 version => $VERSION,
             },
+        },
+        no_index => {
+            directory => ['tt'],
         },
         resources => {
             repository => {
